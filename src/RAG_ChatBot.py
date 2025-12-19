@@ -20,16 +20,16 @@ class ChatBot:
     load_dotenv()
     def __init__(self):
 
-        # Load and split documents
+        
         loader = TextLoader('./materials/torontoTravelAssistant.txt')
         documents = loader.load()
         text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=4)
         docs = text_splitter.split_documents(documents)
 
-        # Initialize embeddings
+        
         embeddings = HuggingFaceEmbeddings()
 
-        # Initialize Pinecone instance
+  
         pc = Pinecone(api_key= os.getenv('PINECONE_API_KEY'))
 
         index_name = "langchain-demo"
@@ -47,12 +47,11 @@ class ChatBot:
         index = pc.Index(index_name)
         docsearch = PineconeVectorStore.from_documents(docs, embeddings, index_name=index_name)
 
-        # Initialize ChatOpenAI
         model_name = "gpt-3.5-turbo"
         llm = ChatOpenAI(model_name=model_name, organization='org-G8UtpAEtkeLatwCgEhQGaPOw')
 
 
-        # Define prompt template
+ 
         template = """
         You are a Toronto travel assistant. Users will ask you questions about their trip to Toronto. Use the following piece of context to answer the question.
         If you don't know the answer, just say you don't know.
