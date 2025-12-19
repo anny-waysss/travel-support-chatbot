@@ -69,6 +69,5 @@ class ChatBot:
         )
 
         
-# Usage example:
 if __name__ == "__main__":
     chatbot = ChatBot()
